@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Policy Generator — VakilAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body id="policy-page">
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5" opacity="0.6"/>
+        <path d="M2 12l10 5 10-5" opacity="0.3"/>
+      </svg>
+    </div>
+    <span class="sidebar-logo-text">Vakil<span>AI</span></span>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="nav-item" href="dashboard.html" data-page="dashboard.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="assessment.html" data-page="assessment.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      DPDP Assessment
+    </a>
+    <a class="nav-item active" href="policy.html" data-page="policy.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Policy Generator
+    </a>
+    <a class="nav-item" href="calendar.html" data-page="calendar.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Compliance Calendar
+    </a>
+    <a class="nav-item" href="query.html" data-page="query.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Legal Query
+    </a>
+    <a class="nav-item" href="#" data-page="reports.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Reports
+    </a>
+    <a class="nav-item" href="#" data-page="settings.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      Settings
+    </a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">
+      <div class="user-avatar">AJ</div>
+      <div class="user-info">
+        <div class="user-name">Alok Jain</div>
+        <div class="user-company">Adeyas Technologies</div>
+      </div>
+    </div>
+    <a href="login.html" class="logout-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="app-main">
+  <header class="topbar">
+    <button class="hamburger-btn" id="hamburger-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="topbar-title">Policy Generator</span>
+    <div class="topbar-search">
+      <svg class="topbar-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search policies..." />
+    </div>
+    <div class="topbar-actions">
+      <button class="topbar-icon-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="topbar-notif-badge">3</span>
+      </button>
+      <div class="topbar-avatar">AJ</div>
+    </div>
+  </header>
+
+  <main class="app-content">
+    <div class="page-header">
+      <h1>Privacy Policy Generator</h1>
+      <p>Generate a DPDP-compliant privacy policy for your website or app in minutes. Powered by the latest DPDP Act 2023 rules.</p>
+    </div>
+
+    <div class="policy-layout">
+      <!-- LEFT FORM PANEL -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Policy Details</div>
+              <div class="card-subtitle">Fill in your business information</div>
+            </div>
+            <span class="badge badge-primary">DPDP Act 2023</span>
+          </div>
+          <div class="card-body" style="padding:22px 22px;">
+
+            <div class="form-group">
+              <label class="form-label" for="company-name">Company / Brand Name <span class="required">*</span></label>
+              <input type="text" id="company-name" class="form-input" placeholder="e.g. Adeyas Technologies" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="website-url">Website or App URL <span class="required">*</span></label>
+              <input type="url" id="website-url" class="form-input" placeholder="e.g. https://adeyas.in" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">What personal data do you collect? <span class="required">*</span></label>
+              <div class="checkbox-grid" style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));">
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Name & Contact Information" />
+                  Name & Contact
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Email Address" />
+                  Email Address
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Phone Number" />
+                  Phone Number
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Payment & Financial Information" />
+                  Payment Info
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Location Data" />
+                  Location Data
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Device Information" />
+                  Device Info
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Browsing Behavior" />
+                  Browsing Behavior
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Health & Medical Data" />
+                  Health Data
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Financial Data" />
+                  Financial Data
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="data-type-check" data-label="Government ID / Aadhaar" />
+                  Government ID
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Why do you collect this data? <span class="required">*</span></label>
+              <div class="checkbox-grid" style="grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));">
+                <label class="checkbox-option">
+                  <input type="checkbox" class="purpose-check" data-label="Service Delivery" />
+                  Service Delivery
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="purpose-check" data-label="Marketing & Promotions" />
+                  Marketing
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="purpose-check" data-label="Analytics & Improvement" />
+                  Analytics
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="purpose-check" data-label="Legal Compliance" />
+                  Legal Compliance
+                </label>
+                <label class="checkbox-option">
+                  <input type="checkbox" class="purpose-check" data-label="Customer Support" />
+                  Customer Support
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Do you share data with third parties?</label>
+              <div class="toggle-group">
+                <label class="toggle">
+                  <input type="checkbox" id="share-data-toggle" />
+                  <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label" id="toggle-label">No, we don't share data</span>
+              </div>
+            </div>
+
+            <div id="third-party-section" style="display:none;">
+              <div class="form-group">
+                <label class="form-label">Types of third parties you share data with</label>
+                <div class="checkbox-grid" style="grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));">
+                  <label class="checkbox-option">
+                    <input type="checkbox" />
+                    Payment processors
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" />
+                    Analytics tools
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" />
+                    Marketing platforms
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" />
+                    Cloud storage
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" />
+                    Support tools
+                  </label>
+                  <label class="checkbox-option">
+                    <input type="checkbox" />
+                    Other
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="retention-period">Data Retention Period <span class="required">*</span></label>
+              <select id="retention-period" class="form-select" required>
+                <option value="">Select retention period...</option>
+                <option value="30 days">30 days</option>
+                <option value="90 days">90 days</option>
+                <option value="1 year">1 year</option>
+                <option value="2 years">2 years</option>
+                <option value="5 years">5 years</option>
+                <option value="as long as account is active">Until account deletion</option>
+                <option value="as required by applicable law">As required by law</option>
+              </select>
+            </div>
+
+            <div class="divider"></div>
+
+            <p style="font-size:0.8125rem;font-weight:700;color:var(--text-dark);margin-bottom:14px;">
+              Grievance Officer Details
+              <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted);"> (Required under DPDP Act S.13)</span>
+            </p>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="grievance-name">Grievance Officer Name <span class="required">*</span></label>
+                <input type="text" id="grievance-name" class="form-input" placeholder="e.g. Alok Jain" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="grievance-email">Grievance Officer Email <span class="required">*</span></label>
+                <input type="email" id="grievance-email" class="form-input" placeholder="e.g. privacy@adeyas.in" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="grievance-state">State / UT of Grievance Officer</label>
+              <select id="grievance-state" class="form-select">
+                <option value="">Select state...</option>
+                <option>Maharashtra</option>
+                <option>Karnataka</option>
+                <option>Delhi (NCT)</option>
+                <option>Tamil Nadu</option>
+                <option>Telangana</option>
+                <option>Gujarat</option>
+                <option>West Bengal</option>
+                <option>Haryana</option>
+                <option>Uttar Pradesh</option>
+                <option>Rajasthan</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary btn-full btn-lg" id="generate-policy-btn" style="margin-top:6px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Generate Privacy Policy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PREVIEW PANEL -->
+      <div class="policy-preview-panel">
+        <div class="preview-header">
+          <div>
+            <div class="preview-header-title">Privacy Policy Preview</div>
+            <div style="font-size:0.6875rem;color:var(--text-muted);">DPDP Act, 2023 compliant</div>
+          </div>
+          <div class="preview-actions" id="preview-action-buttons" style="display:none;">
+            <button class="btn btn-secondary btn-sm" id="copy-policy-btn">Copy Text</button>
+            <button class="btn btn-secondary btn-sm">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              PDF
+            </button>
+            <button class="btn btn-secondary btn-sm">DOCX</button>
+            <button class="btn btn-primary btn-sm">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Email
+            </button>
+          </div>
+        </div>
+
+        <div class="preview-body">
+          <!-- Placeholder -->
+          <div class="preview-placeholder" id="preview-placeholder">
+            <div class="preview-placeholder-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/>
+                <line x1="9" y1="17" x2="11" y2="17"/>
+              </svg>
+            </div>
+            <h3>Generate your policy to preview it here</h3>
+            <p>Fill in the form on the left and click "Generate Privacy Policy" to create a DPDP-compliant document instantly.</p>
+            <!-- Blurred placeholder preview -->
+            <div style="width:100%;text-align:left;margin-top:16px;opacity:0.5;">
+              <div class="blurred-lines">
+                <div class="blurred-line short" style="height:18px;margin-bottom:12px;"></div>
+                <div class="blurred-line medium"></div>
+                <div class="blurred-line full"></div>
+                <div class="blurred-line long"></div>
+                <div class="blurred-line medium"></div>
+                <div class="blurred-line" style="width:30%;height:16px;margin:14px 0 8px;"></div>
+                <div class="blurred-line full"></div>
+                <div class="blurred-line long"></div>
+                <div class="blurred-line medium"></div>
+                <div class="blurred-line full"></div>
+                <div class="blurred-line" style="width:40%;height:16px;margin:14px 0 8px;"></div>
+                <div class="blurred-line full"></div>
+                <div class="blurred-line long"></div>
+                <div class="blurred-line medium"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Generated Content -->
+          <div class="preview-content" id="preview-content">
+            <div id="policy-preview-text"></div>
+          </div>
+        </div>
+
+        <div class="preview-footer">
+          <div class="preview-notice">
+            <strong>Last updated</strong> based on DPDP Act, 2023 rules (as amended Feb 2026) and Draft DPDP Rules, 2025 · Not legal advice
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Toggle label
+    var toggle = document.getElementById('share-data-toggle');
+    var label = document.getElementById('toggle-label');
+    if (toggle) {
+      toggle.addEventListener('change', function () {
+        label.textContent = toggle.checked ? 'Yes, we share data with third parties' : 'No, we don\'t share data';
+      });
+    }
+
+    // Show preview buttons when generated
+    var genBtn = document.getElementById('generate-policy-btn');
+    if (genBtn) {
+      genBtn.addEventListener('click', function () {
+        setTimeout(function () {
+          var btns = document.getElementById('preview-action-buttons');
+          if (btns) btns.style.display = 'flex';
+        }, 2200);
+      });
+    }
+
+    // Checkbox styling
+    document.querySelectorAll('#policy-page .checkbox-option').forEach(function (opt) {
+      opt.addEventListener('click', function (e) {
+        if (e.target.tagName === 'INPUT') return;
+        var cb = opt.querySelector('input[type="checkbox"]');
+        cb.checked = !cb.checked;
+        opt.classList.toggle('checked', cb.checked);
+      });
+    });
+    document.querySelectorAll('#policy-page input[type="checkbox"]').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        cb.closest('.checkbox-option').classList.toggle('checked', cb.checked);
+      });
+    });
+  });
+</script>
+</body>
+</html>

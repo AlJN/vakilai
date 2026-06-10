@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — VakilAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body id="dashboard-page">
+
+<!-- Sidebar Overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5" opacity="0.6"/>
+        <path d="M2 12l10 5 10-5" opacity="0.3"/>
+      </svg>
+    </div>
+    <span class="sidebar-logo-text">Vakil<span>AI</span></span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="nav-item" href="dashboard.html" data-page="dashboard.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="assessment.html" data-page="assessment.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      DPDP Assessment
+    </a>
+    <a class="nav-item" href="policy.html" data-page="policy.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      Policy Generator
+    </a>
+    <a class="nav-item" href="calendar.html" data-page="calendar.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      Compliance Calendar
+    </a>
+    <a class="nav-item" href="query.html" data-page="query.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+      Legal Query
+    </a>
+    <a class="nav-item" href="#" data-page="reports.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+      Reports
+    </a>
+    <a class="nav-item" href="#" data-page="settings.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+      </svg>
+      Settings
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">
+      <div class="user-avatar">AJ</div>
+      <div class="user-info">
+        <div class="user-name">Alok Jain</div>
+        <div class="user-company">Adeyas Technologies</div>
+      </div>
+    </div>
+    <a href="login.html" class="logout-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Sign out
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="app-main">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <span class="topbar-title">Dashboard</span>
+
+    <div class="topbar-search">
+      <svg class="topbar-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" placeholder="Search regulations, deadlines..." />
+    </div>
+
+    <div class="topbar-actions">
+      <div style="position:relative;">
+        <button class="topbar-icon-btn" id="notif-btn" aria-label="Notifications">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 01-3.46 0"/>
+          </svg>
+          <span class="topbar-notif-badge">3</span>
+        </button>
+      </div>
+      <div class="topbar-avatar">AJ</div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="app-content">
+
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+      <div class="welcome-banner-text">
+        <h2>Good morning, Alok 👋</h2>
+        <p>Your compliance score improved by <strong>8 points</strong> this week. Keep going — 3 tasks need attention.</p>
+      </div>
+      <div class="welcome-banner-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block;vertical-align:middle;margin-right:5px;">
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+          <polyline points="16 7 22 7 22 13"/>
+        </svg>
+        Score: 78/100
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+      <!-- Compliance Score -->
+      <div class="stat-card">
+        <div class="stat-label">Compliance Score</div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="circular-progress" style="width:60px;height:60px;">
+            <svg width="60" height="60" viewBox="0 0 60 60">
+              <circle cx="30" cy="30" r="24" fill="none" stroke="#ede9fe" stroke-width="5"/>
+              <circle
+                class="progress-ring-circle"
+                cx="30" cy="30" r="24"
+                fill="none" stroke="#7c3aed" stroke-width="5"
+                stroke-linecap="round"
+                data-score="78"
+              />
+            </svg>
+            <div class="circular-progress-value" style="font-size:1rem;">
+              78
+              <div class="circular-progress-label">/100</div>
+            </div>
+          </div>
+          <div>
+            <div class="stat-value" style="font-size:1.5rem;margin-bottom:2px;">Good</div>
+            <div class="stat-meta up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+              +8 pts this week
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Open Issues -->
+      <div class="stat-card">
+        <div class="stat-label">Open Issues</div>
+        <div class="stat-value" style="color:var(--error);">12</div>
+        <div class="stat-meta down">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          3 new this week
+        </div>
+      </div>
+
+      <!-- Days to Deadline -->
+      <div class="stat-card">
+        <div class="stat-label">Next Deadline</div>
+        <div class="stat-value" style="color:var(--warning);">8</div>
+        <div class="stat-meta warn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Days — GSTR-3B due Jun 20
+        </div>
+      </div>
+
+      <!-- Regulations Monitored -->
+      <div class="stat-card">
+        <div class="stat-label">Regulations Monitored</div>
+        <div class="stat-value">34</div>
+        <div class="stat-meta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Across 7 categories
+        </div>
+      </div>
+    </div>
+
+    <!-- Two column: Chart + Deadlines -->
+    <div class="two-col-grid">
+      <!-- Compliance Score Breakdown -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Compliance Score Breakdown</div>
+            <div class="card-subtitle">By regulation category</div>
+          </div>
+          <a href="#" class="btn btn-ghost btn-sm">Details</a>
+        </div>
+        <div class="card-body">
+          <div class="chart-bars">
+            <div class="chart-bar-item">
+              <div class="chart-bar-header">
+                <span class="chart-bar-label">DPDP Act 2023</span>
+                <span class="chart-bar-value" style="color:var(--error);">65%</span>
+              </div>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill bar-red" data-width="65%" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-header">
+                <span class="chart-bar-label">GST Compliance</span>
+                <span class="chart-bar-value" style="color:var(--success-text);">88%</span>
+              </div>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill bar-green" data-width="88%" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-header">
+                <span class="chart-bar-label">Companies Act</span>
+                <span class="chart-bar-value" style="color:var(--success-text);">92%</span>
+              </div>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill bar-green" data-width="92%" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-header">
+                <span class="chart-bar-label">Labour Law</span>
+                <span class="chart-bar-value" style="color:var(--warning-text);">71%</span>
+              </div>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill bar-amber" data-width="71%" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="chart-bar-item">
+              <div class="chart-bar-header">
+                <span class="chart-bar-label">FEMA (Applicable)</span>
+                <span class="chart-bar-value" style="color:var(--primary);">84%</span>
+              </div>
+              <div class="chart-bar-track">
+                <div class="chart-bar-fill bar-violet" data-width="84%" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border-light);display:flex;gap:14px;font-size:0.75rem;color:var(--text-muted);">
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;background:var(--error);border-radius:2px;display:inline-block;"></span> Needs Attention</span>
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;background:var(--warning);border-radius:2px;display:inline-block;"></span> Improving</span>
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;background:var(--success);border-radius:2px;display:inline-block;"></span> Compliant</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Deadlines -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Upcoming Deadlines</div>
+            <div class="card-subtitle">Next 120 days</div>
+          </div>
+          <a href="calendar.html" class="btn btn-ghost btn-sm">View all</a>
+        </div>
+        <div class="card-body" style="padding:8px 12px;">
+          <div class="deadline-list">
+            <div class="deadline-item">
+              <div class="deadline-dot dot-amber"></div>
+              <div class="deadline-info">
+                <div class="deadline-title">GSTR-3B Filing</div>
+                <div class="deadline-date">Jun 20, 2026</div>
+              </div>
+              <div class="deadline-days">8 days</div>
+              <span class="badge badge-warning">Urgent</span>
+            </div>
+            <div class="deadline-item">
+              <div class="deadline-dot dot-red"></div>
+              <div class="deadline-info">
+                <div class="deadline-title">DPDP Data Audit</div>
+                <div class="deadline-date">Jul 1, 2026</div>
+              </div>
+              <div class="deadline-days">19 days</div>
+              <span class="badge badge-danger">Action Req.</span>
+            </div>
+            <div class="deadline-item">
+              <div class="deadline-dot dot-green"></div>
+              <div class="deadline-info">
+                <div class="deadline-title">Board Resolution</div>
+                <div class="deadline-date">Jul 15, 2026</div>
+              </div>
+              <div class="deadline-days">33 days</div>
+              <span class="badge badge-success">On Track</span>
+            </div>
+            <div class="deadline-item">
+              <div class="deadline-dot dot-green"></div>
+              <div class="deadline-info">
+                <div class="deadline-title">Labour Law Return</div>
+                <div class="deadline-date">Jul 31, 2026</div>
+              </div>
+              <div class="deadline-days">49 days</div>
+              <span class="badge badge-success">On Track</span>
+            </div>
+            <div class="deadline-item">
+              <div class="deadline-dot dot-blue"></div>
+              <div class="deadline-info">
+                <div class="deadline-title">IT Return Filing</div>
+                <div class="deadline-date">Sep 30, 2026</div>
+              </div>
+              <div class="deadline-days">121 days</div>
+              <span class="badge badge-info">Upcoming</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Recent Activity</div>
+          <div class="card-subtitle">Automated updates and changes</div>
+        </div>
+        <a href="#" class="btn btn-ghost btn-sm">View all</a>
+      </div>
+      <div class="card-body" style="padding:4px 20px 12px;">
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-icon violet">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+            </div>
+            <div class="activity-content">
+              <div class="activity-text">Privacy Policy updated automatically due to <span>DPDP Rule 12 amendment</span></div>
+              <div class="activity-time">2 hours ago · Automated</div>
+            </div>
+            <span class="badge badge-primary" style="margin-left:auto;">Auto-updated</span>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon green">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="activity-content">
+              <div class="activity-text">DPDP Assessment completed — <span>Score: 78/100</span></div>
+              <div class="activity-time">Yesterday at 3:42 PM</div>
+            </div>
+            <span class="badge badge-success">Completed</span>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon red">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </div>
+            <div class="activity-content">
+              <div class="activity-text"><span>3 new issues flagged</span> — DPDP data retention policy gaps identified</div>
+              <div class="activity-time">2 days ago</div>
+            </div>
+            <span class="badge badge-danger">3 Issues</span>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon amber">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <div class="activity-content">
+              <div class="activity-text">GST rate change alert — <span>HSN code 9963 updated to 18%</span></div>
+              <div class="activity-time">3 days ago</div>
+            </div>
+            <span class="badge badge-warning">Alert</span>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon blue">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="activity-content">
+              <div class="activity-text">Welcome to <span>VakilAI</span>! Your account is set up and compliance tracking is active.</div>
+              <div class="activity-time">5 days ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Quick Actions</div>
+      </div>
+      <div class="card-body">
+        <div class="quick-actions">
+          <a href="assessment.html" class="quick-action-btn">
+            <div class="quick-action-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <span class="quick-action-label">Run DPDP Assessment</span>
+          </a>
+          <a href="policy.html" class="quick-action-btn">
+            <div class="quick-action-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+            </div>
+            <span class="quick-action-label">Generate Privacy Policy</span>
+          </a>
+          <a href="query.html" class="quick-action-btn">
+            <div class="quick-action-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+              </svg>
+            </div>
+            <span class="quick-action-label">Ask Legal Query</span>
+          </a>
+          <a href="#" class="quick-action-btn">
+            <div class="quick-action-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            </div>
+            <span class="quick-action-label">Download Compliance Report</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

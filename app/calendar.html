@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compliance Calendar — VakilAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body id="calendar-page">
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5" opacity="0.6"/>
+        <path d="M2 12l10 5 10-5" opacity="0.3"/>
+      </svg>
+    </div>
+    <span class="sidebar-logo-text">Vakil<span>AI</span></span>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="nav-item" href="dashboard.html" data-page="dashboard.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="assessment.html" data-page="assessment.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      DPDP Assessment
+    </a>
+    <a class="nav-item" href="policy.html" data-page="policy.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Policy Generator
+    </a>
+    <a class="nav-item active" href="calendar.html" data-page="calendar.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Compliance Calendar
+    </a>
+    <a class="nav-item" href="query.html" data-page="query.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Legal Query
+    </a>
+    <a class="nav-item" href="#" data-page="reports.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Reports
+    </a>
+    <a class="nav-item" href="#" data-page="settings.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      Settings
+    </a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">
+      <div class="user-avatar">AJ</div>
+      <div class="user-info">
+        <div class="user-name">Alok Jain</div>
+        <div class="user-company">Adeyas Technologies</div>
+      </div>
+    </div>
+    <a href="login.html" class="logout-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="app-main">
+  <header class="topbar">
+    <button class="hamburger-btn" id="hamburger-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="topbar-title">Compliance Calendar</span>
+    <div class="topbar-search">
+      <svg class="topbar-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search compliance events..." />
+    </div>
+    <div class="topbar-actions">
+      <button class="topbar-icon-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="topbar-notif-badge">3</span>
+      </button>
+      <div class="topbar-avatar">AJ</div>
+    </div>
+  </header>
+
+  <main class="app-content">
+
+    <!-- Controls -->
+    <div class="calendar-controls">
+      <div class="month-nav">
+        <button class="month-nav-btn" onclick="changeMonth(-1)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="month-title" id="month-title">June 2026</div>
+        <button class="month-nav-btn" onclick="changeMonth(1)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="view-toggle">
+          <button class="view-toggle-btn" id="cal-view-btn">Calendar</button>
+          <button class="view-toggle-btn active" id="list-view-btn">List</button>
+        </div>
+        <button class="btn btn-primary" id="add-event-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Custom Event
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary Pills -->
+    <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;">
+      <div style="background:var(--error-light);border:1px solid #fca5a5;border-radius:var(--radius-full);padding:6px 14px;font-size:0.8125rem;font-weight:600;color:var(--error-text);display:flex;align-items:center;gap:6px;">
+        <span style="width:7px;height:7px;background:var(--error);border-radius:50%;"></span>
+        0 Overdue
+      </div>
+      <div style="background:var(--warning-light);border:1px solid #fcd34d;border-radius:var(--radius-full);padding:6px 14px;font-size:0.8125rem;font-weight:600;color:var(--warning-text);display:flex;align-items:center;gap:6px;">
+        <span style="width:7px;height:7px;background:var(--warning);border-radius:50%;"></span>
+        2 This Week
+      </div>
+      <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:var(--radius-full);padding:6px 14px;font-size:0.8125rem;font-weight:600;color:var(--warning-text);display:flex;align-items:center;gap:6px;">
+        <span style="width:7px;height:7px;background:#f59e0b;border-radius:50%;"></span>
+        4 This Month
+      </div>
+      <div style="background:var(--success-light);border:1px solid #bbf7d0;border-radius:var(--radius-full);padding:6px 14px;font-size:0.8125rem;font-weight:600;color:var(--success-text);display:flex;align-items:center;gap:6px;">
+        <span style="width:7px;height:7px;background:var(--success);border-radius:50%;"></span>
+        5 Upcoming
+      </div>
+    </div>
+
+    <!-- OVERDUE SECTION -->
+    <div class="calendar-section">
+      <div class="section-header">
+        <span class="section-dot" style="background:var(--error);"></span>
+        <span class="section-title">Overdue</span>
+        <span class="section-count">0 items</span>
+      </div>
+      <div class="empty-state-mini">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Great! Nothing overdue. Keep up the good work.
+      </div>
+    </div>
+
+    <!-- THIS WEEK SECTION -->
+    <div class="calendar-section">
+      <div class="section-header">
+        <span class="section-dot" style="background:var(--warning);"></span>
+        <span class="section-title">This Week</span>
+        <span class="section-count">2 items</span>
+        <span class="badge badge-warning" style="margin-left:4px;">Urgent</span>
+      </div>
+
+      <div class="calendar-item border-amber">
+        <div class="calendar-item-icon" style="background:var(--warning-light);color:var(--warning-text);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">GSTR-3B Filing for May 2026</div>
+          <div class="calendar-item-meta">
+            <span>Due: Jun 20, 2026</span>
+            <span class="badge badge-warning">GST Compliance</span>
+            <span>Monthly return — mandatory for all GST registrants</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-urgent">8 days left</span>
+          <a href="#" class="btn btn-primary btn-sm">File Now →</a>
+        </div>
+      </div>
+
+      <div class="calendar-item border-amber">
+        <div class="calendar-item-icon" style="background:var(--info-light);color:var(--info-text);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">Annual Information Statement (AIS) Review</div>
+          <div class="calendar-item-meta">
+            <span>Due: Jun 22, 2026</span>
+            <span class="badge badge-info">Income Tax</span>
+            <span>Verify and reconcile with ITR before filing</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-urgent">10 days left</span>
+          <a href="#" class="btn btn-secondary btn-sm">Review →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- THIS MONTH SECTION -->
+    <div class="calendar-section">
+      <div class="section-header">
+        <span class="section-dot" style="background:#f59e0b;"></span>
+        <span class="section-title">This Month</span>
+        <span class="section-count">4 items</span>
+      </div>
+
+      <div class="calendar-item border-red">
+        <div class="calendar-item-icon" style="background:var(--primary-light);color:var(--primary);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">DPDP Data Audit Completion</div>
+          <div class="calendar-item-meta">
+            <span>Due: Jul 1, 2026</span>
+            <span class="badge badge-primary">DPDP Act</span>
+            <span>Complete your annual data audit and update records</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-warning">19 days</span>
+          <a href="assessment.html" class="btn btn-primary btn-sm">Start Assessment →</a>
+        </div>
+      </div>
+
+      <div class="calendar-item border-amber">
+        <div class="calendar-item-icon" style="background:var(--warning-light);color:var(--warning-text);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">Payroll TDS Deposit (Jun 2026)</div>
+          <div class="calendar-item-meta">
+            <span>Due: Jul 7, 2026</span>
+            <span class="badge badge-warning">TDS Compliance</span>
+            <span>Section 192 TDS on employee salaries</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-warning">25 days</span>
+          <button class="btn btn-secondary btn-sm">View Details</button>
+        </div>
+      </div>
+
+      <div class="calendar-item border-green">
+        <div class="calendar-item-icon" style="background:var(--success-light);color:var(--success-text);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">PF ECR Return (May 2026)</div>
+          <div class="calendar-item-meta">
+            <span>Due: Jul 15, 2026</span>
+            <span class="badge badge-success">Labour Law</span>
+            <span>Electronic Challan cum Return — EPFO portal</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-normal">33 days</span>
+          <button class="btn btn-secondary btn-sm">View Details</button>
+        </div>
+      </div>
+
+      <div class="calendar-item border-green">
+        <div class="calendar-item-icon" style="background:var(--info-light);color:var(--info-text);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">Board Meeting &amp; Resolutions (Q2)</div>
+          <div class="calendar-item-meta">
+            <span>Due: Jul 15, 2026</span>
+            <span class="badge badge-info">Companies Act</span>
+            <span>Quarterly board meeting required under Companies Act 2013</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-normal">33 days</span>
+          <button class="btn btn-secondary btn-sm">Schedule</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPCOMING SECTION -->
+    <div class="calendar-section" id="upcoming-section">
+      <div class="section-header">
+        <span class="section-dot" style="background:var(--success);"></span>
+        <span class="section-title">Upcoming</span>
+        <span class="section-count">5 items</span>
+      </div>
+
+      <div class="calendar-item border-green">
+        <div class="calendar-item-icon" style="background:var(--warning-light);color:var(--warning-text);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">GSTR-1 Filing (Monthly) — July 2026</div>
+          <div class="calendar-item-meta">
+            <span>Due: Aug 11, 2026</span>
+            <span class="badge badge-warning">GST Compliance</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-future">71 days</span>
+          <button class="btn btn-secondary btn-sm">View Details</button>
+        </div>
+      </div>
+
+      <div class="calendar-item border-green">
+        <div class="calendar-item-icon" style="background:var(--warning-light);color:var(--warning-text);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">GSTR-3B Filing (Monthly) — July 2026</div>
+          <div class="calendar-item-meta">
+            <span>Due: Aug 20, 2026</span>
+            <span class="badge badge-warning">GST Compliance</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-future">80 days</span>
+          <button class="btn btn-secondary btn-sm">View Details</button>
+        </div>
+      </div>
+
+      <div class="calendar-item border-blue">
+        <div class="calendar-item-icon" style="background:var(--success-light);color:var(--success-text);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">Labour Law Half-Yearly Return</div>
+          <div class="calendar-item-meta">
+            <span>Due: Aug 31, 2026</span>
+            <span class="badge badge-success">Labour Law</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-future">91 days</span>
+          <button class="btn btn-secondary btn-sm">View Details</button>
+        </div>
+      </div>
+
+      <div class="calendar-item border-blue">
+        <div class="calendar-item-icon" style="background:var(--info-light);color:var(--info-text);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">Income Tax Return Filing FY 2025–26</div>
+          <div class="calendar-item-meta">
+            <span>Due: Sep 30, 2026</span>
+            <span class="badge badge-info">Income Tax</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-future">121 days</span>
+          <button class="btn btn-secondary btn-sm">View Details</button>
+        </div>
+      </div>
+
+      <div class="calendar-item border-violet">
+        <div class="calendar-item-icon" style="background:var(--primary-light);color:var(--primary);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="calendar-item-body">
+          <div class="calendar-item-title">DPDP Annual Review &amp; Policy Update</div>
+          <div class="calendar-item-meta">
+            <span>Due: Dec 31, 2026</span>
+            <span class="badge badge-primary">DPDP Act</span>
+          </div>
+        </div>
+        <div class="calendar-item-right">
+          <span class="days-pill days-future">213 days</span>
+          <button class="btn btn-secondary btn-sm">View Details</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ADD EVENT MODAL -->
+<div class="modal-overlay" id="add-event-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add Custom Compliance Event</div>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label" for="event-title">Event Title <span class="required">*</span></label>
+        <input type="text" id="event-title" class="form-input" placeholder="e.g. Trademark Renewal Filing" required />
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label" for="event-date">Due Date <span class="required">*</span></label>
+          <input type="date" id="event-date" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="event-category">Category</label>
+          <select id="event-category" class="form-select">
+            <option value="Other">Other / Custom</option>
+            <option value="GST Compliance">GST Compliance</option>
+            <option value="Income Tax">Income Tax</option>
+            <option value="DPDP Act">DPDP Act</option>
+            <option value="Companies Act">Companies Act</option>
+            <option value="Labour Law">Labour Law</option>
+            <option value="TDS Compliance">TDS Compliance</option>
+            <option value="FEMA">FEMA</option>
+            <option value="Intellectual Property">Intellectual Property</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="event-notes">Notes (optional)</label>
+        <textarea id="event-notes" class="form-textarea" rows="2" placeholder="Any additional details or instructions..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reminder</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="reminder" value="1d" /> 1 day before
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="reminder" value="3d" checked /> 3 days before
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="reminder" value="7d" /> 7 days before
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="reminder" value="none" /> No reminder
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+      <button class="btn btn-primary" id="modal-save-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Event
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  var months = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+  var currentMonth = 5; // June
+  var currentYear = 2026;
+
+  function changeMonth(delta) {
+    currentMonth += delta;
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+    document.getElementById('month-title').textContent = months[currentMonth] + ' ' + currentYear;
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Radio styling in modal
+    document.querySelectorAll('#add-event-modal .radio-option').forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        var name = opt.querySelector('input').name;
+        document.querySelectorAll('#add-event-modal .radio-option input[name="' + name + '"]').forEach(function (r) {
+          r.closest('.radio-option').classList.remove('selected');
+        });
+        opt.classList.add('selected');
+        opt.querySelector('input').checked = true;
+      });
+    });
+  });
+</script>
+</body>
+</html>

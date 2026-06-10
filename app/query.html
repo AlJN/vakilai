@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Query — VakilAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/app.css" />
+  <style>
+    /* ── Query page layout ── */
+    .query-shell {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 0;
+      height: calc(100vh - var(--topbar-h, 64px));
+      overflow: hidden;
+    }
+
+    /* History sidebar */
+    .query-history {
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .qh-top {
+      padding: 20px 16px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .qh-top h3 {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .btn-new-query {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 9px 14px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 8px;
+      font-size: .82rem;
+      font-weight: 600;
+      transition: background .2s;
+    }
+    .btn-new-query:hover { background: var(--primary-hover); }
+    .qh-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 8px;
+    }
+    .qh-group-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 8px 8px 4px;
+    }
+    .qh-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background .15s;
+      margin-bottom: 2px;
+    }
+    .qh-item:hover { background: var(--bg); }
+    .qh-item.active { background: var(--primary-light); }
+    .qh-item-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--bg);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      color: var(--primary);
+    }
+    .qh-item.active .qh-item-icon { background: var(--primary); color: #fff; }
+    .qh-item-body { flex: 1; min-width: 0; }
+    .qh-item-title {
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+    .qh-item.active .qh-item-title { color: var(--primary); }
+    .qh-item-meta { font-size: .7rem; color: var(--text-muted); }
+
+    /* Chat area */
+    .query-chat {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .chat-header {
+      padding: 16px 24px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-header-left h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .chat-header-left p { font-size: .78rem; color: var(--text-muted); }
+    .chat-header-right { display: flex; gap: 8px; }
+    .chat-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      transition: border-color .15s, color .15s;
+    }
+    .chat-action-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* Suggested topics bar */
+    .chat-suggestions {
+      padding: 12px 24px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .suggest-chip {
+      font-size: .75rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: var(--bg);
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: border-color .15s, color .15s, background .15s;
+      white-space: nowrap;
+    }
+    .suggest-chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* Messages */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .msg { display: flex; gap: 12px; max-width: 820px; }
+    .msg.msg-user { flex-direction: row-reverse; align-self: flex-end; }
+    .msg-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: .7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .msg-bot .msg-avatar  { background: var(--primary); color: #fff; }
+    .msg-user .msg-avatar { background: var(--text-dark); color: #fff; }
+    .msg-body { flex: 1; }
+    .msg-meta {
+      font-size: .68rem;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+    .msg-user .msg-meta { text-align: right; }
+    .msg-bubble {
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: .875rem;
+      line-height: 1.72;
+    }
+    .msg-bot .msg-bubble {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top-left-radius: 4px;
+      color: var(--text-dark);
+    }
+    .msg-user .msg-bubble {
+      background: var(--primary);
+      color: #fff;
+      border-top-right-radius: 4px;
+    }
+    .msg-bubble h4 {
+      font-size: .82rem;
+      font-weight: 700;
+      margin: 14px 0 6px;
+    }
+    .msg-bubble h4:first-child { margin-top: 0; }
+    .msg-bubble ul { padding-left: 16px; list-style: disc; }
+    .msg-bubble ul li { margin-bottom: 4px; }
+    .msg-bubble p + p { margin-top: 8px; }
+
+    /* Sources */
+    .msg-sources {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .75rem;
+    }
+    .msg-sources-label {
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-size: .67rem;
+    }
+    .source-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 0;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .source-item::before {
+      content: '§';
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 0 0 4px;
+    }
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      border-top-left-radius: 4px;
+    }
+    .typing-dots span {
+      width: 6px; height: 6px;
+      background: var(--text-muted);
+      border-radius: 50%;
+      animation: typeBounce .9s ease-in-out infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: .15s; }
+    .typing-dots span:nth-child(3) { animation-delay: .3s; }
+    @keyframes typeBounce {
+      0%,80%,100%{transform:translateY(0);opacity:.5}
+      40%{transform:translateY(-5px);opacity:1}
+    }
+    .typing-indicator.hidden { display: none; }
+
+    /* Disclaimer */
+    .chat-disclaimer {
+      padding: 8px 24px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      font-size: .72rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Input area */
+    .chat-input-area {
+      padding: 16px 24px 20px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .chat-input-wrap {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .chat-input-wrap:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(124,58,237,.1);
+    }
+    .chat-textarea {
+      flex: 1;
+      resize: none;
+      background: transparent;
+      border: none;
+      font-size: .9rem;
+      line-height: 1.5;
+      color: var(--text-dark);
+      max-height: 160px;
+      min-height: 24px;
+    }
+    .chat-textarea::placeholder { color: var(--text-muted); }
+    .chat-textarea:focus { outline: none; }
+    .chat-send-btn {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: background .2s, transform .15s;
+    }
+    .chat-send-btn:hover { background: var(--primary-hover); transform: scale(1.05); }
+    .chat-send-btn:disabled { background: var(--border); cursor: not-allowed; transform: none; }
+    .chat-input-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      font-size: .72rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .query-shell { grid-template-columns: 1fr; }
+      .query-history { display: none; }
+    }
+  </style>
+</head>
+<body id="query-page">
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5" opacity="0.6"/>
+        <path d="M2 12l10 5 10-5" opacity="0.3"/>
+      </svg>
+    </div>
+    <span class="sidebar-logo-text">Vakil<span>AI</span></span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="nav-item" href="dashboard.html" data-page="dashboard.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="assessment.html" data-page="assessment.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      DPDP Assessment
+    </a>
+    <a class="nav-item" href="policy.html" data-page="policy.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      Policy Generator
+    </a>
+    <a class="nav-item" href="calendar.html" data-page="calendar.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      Compliance Calendar
+    </a>
+    <a class="nav-item active" href="query.html" data-page="query.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+      Legal Query
+    </a>
+    <a class="nav-item" href="#" data-page="reports.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+      Reports
+    </a>
+    <a class="nav-item" href="#" data-page="settings.html">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+      </svg>
+      Settings
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">
+      <div class="user-avatar">AJ</div>
+      <div class="user-info">
+        <div class="user-name">Alok Jain</div>
+        <div class="user-company">Adeyas Technologies</div>
+      </div>
+    </div>
+    <a href="login.html" class="logout-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+        <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Sign out
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="app-main">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <span class="topbar-title">Legal Query</span>
+    <div class="topbar-search">
+      <svg class="topbar-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" placeholder="Search regulations, deadlines..." />
+    </div>
+    <div class="topbar-actions">
+      <div style="position:relative;">
+        <button class="topbar-icon-btn" aria-label="Notifications">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 01-3.46 0"/>
+          </svg>
+          <span class="topbar-notif-badge">3</span>
+        </button>
+      </div>
+      <div class="topbar-avatar">AJ</div>
+    </div>
+  </header>
+
+  <!-- QUERY SHELL -->
+  <div class="query-shell">
+
+    <!-- HISTORY SIDEBAR -->
+    <div class="query-history">
+      <div class="qh-top">
+        <h3>Conversations</h3>
+        <button class="btn-new-query" id="btn-new-query">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          New Query
+        </button>
+      </div>
+      <div class="qh-list">
+        <div class="qh-group-label">Today</div>
+        <div class="qh-item active" data-conversation="dpdp-retention">
+          <div class="qh-item-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="qh-item-body">
+            <div class="qh-item-title">DPDP data retention rules</div>
+            <div class="qh-item-meta">2 hours ago · 4 messages</div>
+          </div>
+        </div>
+
+        <div class="qh-group-label">Yesterday</div>
+        <div class="qh-item" data-conversation="fema">
+          <div class="qh-item-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+            </svg>
+          </div>
+          <div class="qh-item-body">
+            <div class="qh-item-title">FEMA compliance for foreign funding</div>
+            <div class="qh-item-meta">Yesterday · 6 messages</div>
+          </div>
+        </div>
+
+        <div class="qh-group-label">This Week</div>
+        <div class="qh-item" data-conversation="gst">
+          <div class="qh-item-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+            </svg>
+          </div>
+          <div class="qh-item-body">
+            <div class="qh-item-title">GST on SaaS services exported</div>
+            <div class="qh-item-meta">Jun 15 · 3 messages</div>
+          </div>
+        </div>
+        <div class="qh-item" data-conversation="esop">
+          <div class="qh-item-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <div class="qh-item-body">
+            <div class="qh-item-title">ESOP taxation for employees</div>
+            <div class="qh-item-meta">Jun 12 · 8 messages</div>
+          </div>
+        </div>
+        <div class="qh-item" data-conversation="labour">
+          <div class="qh-item-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+            </svg>
+          </div>
+          <div class="qh-item-body">
+            <div class="qh-item-title">Startup labour law compliance checklist</div>
+            <div class="qh-item-meta">Jun 10 · 5 messages</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHAT AREA -->
+    <div class="query-chat">
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <h2>DPDP Data Retention Rules</h2>
+          <p>Conversation started 2 hours ago · Sources: DPDP Act 2023, Draft Rules 2025</p>
+        </div>
+        <div class="chat-header-right">
+          <button class="chat-action-btn" id="btn-export">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export
+          </button>
+          <button class="chat-action-btn" id="btn-share">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            Share
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-suggestions">
+        <span class="suggest-chip" data-q="What is the penalty for DPDP Act violation?">DPDP penalties</span>
+        <span class="suggest-chip" data-q="What are my obligations as a Data Fiduciary under DPDP Act?">Data Fiduciary obligations</span>
+        <span class="suggest-chip" data-q="How do I get valid consent under DPDP Act?">Consent requirements</span>
+        <span class="suggest-chip" data-q="Does DPDP Act apply to employee data?">Employee data</span>
+        <span class="suggest-chip" data-q="What is a Data Protection Officer under DPDP?">DPO requirements</span>
+        <span class="suggest-chip" data-q="GST rate for SaaS software services in India">GST on SaaS</span>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+
+        <!-- Message: User -->
+        <div class="msg msg-user">
+          <div class="msg-avatar">AJ</div>
+          <div class="msg-body">
+            <div class="msg-meta">You · 2:14 PM</div>
+            <div class="msg-bubble">
+              What are the data retention requirements under India's DPDP Act 2023?
+            </div>
+          </div>
+        </div>
+
+        <!-- Message: AI -->
+        <div class="msg msg-bot">
+          <div class="msg-avatar">V</div>
+          <div class="msg-body">
+            <div class="msg-meta">VakilAI · 2:14 PM</div>
+            <div class="msg-bubble">
+              <h4>Data Retention Under DPDP Act 2023</h4>
+              <p>Under <strong>Section 8(7)</strong> of the Digital Personal Data Protection Act, 2023, a Data Fiduciary must not retain personal data beyond the period necessary for the purpose for which it was collected or processed.</p>
+
+              <h4>Key requirements:</h4>
+              <ul>
+                <li>No fixed minimum or maximum retention period is mandated in the Act itself</li>
+                <li>Retention must be limited to what is <em>necessary for the stated purpose</em></li>
+                <li>Once the purpose is fulfilled, data must be <strong>erased or anonymised</strong></li>
+                <li>A Data Principal can withdraw consent, triggering immediate deletion obligations</li>
+                <li>The Data Protection Board may specify retention limits for specific data categories via future rules</li>
+              </ul>
+
+              <h4>Practical steps for compliance:</h4>
+              <ul>
+                <li>Document a <strong>Retention Schedule</strong> for each data category you hold</li>
+                <li>Implement automated deletion or anonymisation workflows</li>
+                <li>Include retention periods explicitly in your Privacy Policy (this is required)</li>
+                <li>For health and financial data, cross-check with sector-specific rules (IRDAI, RBI)</li>
+                <li>Train your team on the deletion protocol when consent is withdrawn</li>
+              </ul>
+
+              <p>⚠️ <strong>Important:</strong> Where Indian tax or labour laws mandate longer retention (e.g., 8 years for income tax records, 5 years for PF records), those obligations override DPDP — you retain for compliance, but restrict further processing.</p>
+            </div>
+            <div class="msg-sources">
+              <div class="msg-sources-label">Sources</div>
+              <div class="source-item">DPDP Act, 2023 — Section 8(7)</div>
+              <div class="source-item">Draft DPDP Rules, 2025 — Rule 12 (Data Retention)</div>
+              <div class="source-item">MeitY Guidance Note on Data Retention (Feb 2026)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message: User -->
+        <div class="msg msg-user">
+          <div class="msg-avatar">AJ</div>
+          <div class="msg-body">
+            <div class="msg-meta">You · 2:18 PM</div>
+            <div class="msg-bubble">
+              What about data of our employees — same rules apply?
+            </div>
+          </div>
+        </div>
+
+        <!-- Message: AI -->
+        <div class="msg msg-bot">
+          <div class="msg-avatar">V</div>
+          <div class="msg-body">
+            <div class="msg-meta">VakilAI · 2:18 PM</div>
+            <div class="msg-bubble">
+              <h4>Employee Data Under DPDP Act</h4>
+              <p>Yes — employee data is covered under the DPDP Act 2023, though with some nuances introduced by <strong>Section 17(2)(b)</strong>.</p>
+
+              <h4>Current position:</h4>
+              <ul>
+                <li>The Central Government may exempt certain employer–employee data processing from specific provisions, but <strong>no such exemption has been notified yet</strong></li>
+                <li>Until an exemption is notified, treat employee data with full DPDP obligations</li>
+                <li>Employees are "Data Principals" and have the same rights as customers (access, correction, erasure, grievance redressal)</li>
+              </ul>
+
+              <h4>Mandatory retention periods for employee records (overriding laws):</h4>
+              <ul>
+                <li><strong>Payroll / salary records:</strong> 8 years (Income Tax Act, 1961)</li>
+                <li><strong>PF / ESI records:</strong> 5 years minimum (EPF &amp; MP Act, 1952)</li>
+                <li><strong>Leave records:</strong> 3 years (Shops &amp; Establishments Act)</li>
+                <li><strong>Contract of employment:</strong> Duration of employment + 3 years</li>
+                <li><strong>POSH records:</strong> 3 years post complaint resolution</li>
+              </ul>
+
+              <p>For records where the retention period has elapsed and no legal obligation applies, you must delete or anonymise. Keeping ex-employee data "just in case" is a DPDP violation.</p>
+            </div>
+            <div class="msg-sources">
+              <div class="msg-sources-label">Sources</div>
+              <div class="source-item">DPDP Act, 2023 — Section 17(2)(b)</div>
+              <div class="source-item">Income Tax Act, 1961 — Section 44AA</div>
+              <div class="source-item">EPF &amp; MP Act, 1952 — Section 7Q</div>
+              <div class="source-item">POSH Act, 2013 — Section 16</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typing indicator (hidden by default) -->
+        <div class="typing-indicator hidden" id="typing-indicator">
+          <div class="msg-avatar" style="width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:.7rem;font-weight:700;flex-shrink:0;">V</div>
+          <div class="typing-dots">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="chat-disclaimer">
+        VakilAI provides legal <strong>information</strong>, not legal <strong>advice</strong>. Always consult a qualified legal professional for matters specific to your situation. · Answers are based on laws current as of June 2026.
+      </div>
+
+      <div class="chat-input-area">
+        <div class="chat-input-wrap">
+          <textarea
+            class="chat-textarea"
+            id="chat-input"
+            rows="1"
+            placeholder="Ask a legal question — e.g. 'What are DPDP consent requirements for a B2C app?'"
+          ></textarea>
+          <button class="chat-send-btn" id="chat-send" aria-label="Send">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+        <div class="chat-input-footer">
+          <span>Press Enter to send · Shift+Enter for new line</span>
+          <span>97 queries remaining this month</span>
+        </div>
+      </div>
+    </div><!-- /query-chat -->
+
+  </div><!-- /query-shell -->
+</div><!-- /app-main -->
+
+<script src="js/app.js"></script>
+<script>
+  // ── Auto-resize textarea ──────────────────────────────
+  const textarea  = document.getElementById('chat-input');
+  const sendBtn   = document.getElementById('chat-send');
+  const messages  = document.getElementById('chat-messages');
+  const typing    = document.getElementById('typing-indicator');
+
+  textarea.addEventListener('input', () => {
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 160) + 'px';
+  });
+
+  // ── Send on Enter (not Shift+Enter) ──────────────────
+  textarea.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+  sendBtn.addEventListener('click', sendMessage);
+
+  // ── Suggested chips ───────────────────────────────────
+  document.querySelectorAll('.suggest-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      textarea.value = chip.dataset.q;
+      textarea.dispatchEvent(new Event('input'));
+      textarea.focus();
+    });
+  });
+
+  // ── New Query button ──────────────────────────────────
+  document.getElementById('btn-new-query').addEventListener('click', () => {
+    messages.querySelectorAll('.msg').forEach(m => m.remove());
+    textarea.value = '';
+    textarea.style.height = 'auto';
+    document.querySelector('.chat-header-left h2').textContent = 'New Conversation';
+    document.querySelector('.chat-header-left p').textContent = 'Ask anything about Indian law';
+    textarea.focus();
+  });
+
+  // ── History items ─────────────────────────────────────
+  document.querySelectorAll('.qh-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.qh-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  // ── Mock AI responses ─────────────────────────────────
+  const mockResponses = [
+    {
+      text: `<h4>Great question.</h4>
+      <p>Based on the DPDP Act 2023 and related Indian regulations, here is what applies to your situation:</p>
+      <ul>
+        <li>The obligation falls under <strong>Section 8</strong> of the DPDP Act</li>
+        <li>You must ensure your privacy policy is updated to reflect this</li>
+        <li>Non-compliance can result in penalties from the Data Protection Board</li>
+        <li>We recommend running a full DPDP assessment to identify all gaps</li>
+      </ul>
+      <p>Would you like me to generate a specific checklist for your situation?</p>`,
+      sources: ['DPDP Act, 2023 — Section 8', 'Draft DPDP Rules, 2025']
+    },
+    {
+      text: `<h4>Here's what the law says:</h4>
+      <p>Under Indian law, this is governed by multiple overlapping statutes. The key ones relevant to your query are:</p>
+      <ul>
+        <li><strong>Primary obligation:</strong> Defined under the relevant Act and its rules</li>
+        <li><strong>Penalty for non-compliance:</strong> Can range from ₹10,000 to ₹250 crore depending on severity</li>
+        <li><strong>Safe harbour:</strong> Exists if you can demonstrate reasonable security safeguards were in place</li>
+      </ul>
+      <p>I'd recommend running a full compliance assessment. Would you like me to start one?</p>`,
+      sources: ['DPDP Act, 2023', 'IT Act, 2000 — Section 43A', 'MeitY Guidance, 2026']
+    }
+  ];
+
+  function sendMessage() {
+    const text = textarea.value.trim();
+    if (!text) return;
+
+    // Add user message
+    appendMessage('user', text);
+    textarea.value = '';
+    textarea.style.height = 'auto';
+
+    // Show typing
+    typing.classList.remove('hidden');
+    messages.scrollTop = messages.scrollHeight;
+
+    // Fake AI response after delay
+    setTimeout(() => {
+      typing.classList.add('hidden');
+      const r = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+      appendBotMessage(r.text, r.sources);
+    }, 1800);
+  }
+
+  function appendMessage(role, text) {
+    const now = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    const div = document.createElement('div');
+    div.className = `msg msg-${role}`;
+    div.innerHTML = `
+      <div class="msg-avatar">${role === 'user' ? 'AJ' : 'V'}</div>
+      <div class="msg-body">
+        <div class="msg-meta">${role === 'user' ? 'You' : 'VakilAI'} · ${now}</div>
+        <div class="msg-bubble">${text}</div>
+      </div>`;
+    messages.insertBefore(div, typing);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function appendBotMessage(html, sources) {
+    const now = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    const sourcesHtml = sources.map(s => `<div class="source-item">${s}</div>`).join('');
+    const div = document.createElement('div');
+    div.className = 'msg msg-bot';
+    div.innerHTML = `
+      <div class="msg-avatar">V</div>
+      <div class="msg-body">
+        <div class="msg-meta">VakilAI · ${now}</div>
+        <div class="msg-bubble">${html}</div>
+        <div class="msg-sources">
+          <div class="msg-sources-label">Sources</div>
+          ${sourcesHtml}
+        </div>
+      </div>`;
+    messages.insertBefore(div, typing);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  // ── Export button ─────────────────────────────────────
+  document.getElementById('btn-export').addEventListener('click', () => {
+    alert('Export as PDF — this will be connected to the backend report generator.');
+  });
+</script>
+</body>
+</html>
